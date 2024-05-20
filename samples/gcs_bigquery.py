@@ -41,13 +41,11 @@ df = (
 df = (
     spark.sql("""
             select 
-                price as unit_price,
-                area as total_area,
-                bedrooms as number_bedrooms
-            from temp_housing_model
+                *
+            from temp_housing_prices
             """
     )
-    .createOrReplaceTempView("temp_housing_model2")
+    .createOrReplaceTempView("temp_housing_prices2")
 )
 
 # Save to BigQuery using the Spark way
@@ -55,7 +53,7 @@ df = (
     spark.sql("""
             select 
                 distinct *
-            from temp_housing_prices
+            from temp_housing_prices2
             """
     )
     .write
