@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 
+# Create a Spark session
 spark = (
     SparkSession
     .builder
@@ -7,11 +8,13 @@ spark = (
     .getOrCreate()
 )
 
+# Add BigQuery stuff
 spark.conf.set('temporaryGcsBucket', "dataproc-sample-temp")
 
 file_path = "gs://dataproc-sample-data/house-price.parquet"
 #file_path = "house-price.parquet"
 
+# Create a dataframe for the parquet file
 df = (
     spark.read.option("inferSchema", "true")
     .option("header", "true")
@@ -19,7 +22,7 @@ df = (
     .createOrReplaceTempView("temp_housing_model")
 )
 
-# Paste in the straight SQL to create the view
+# Paste in the straight SQL to create transformation view
 df = (
     spark.sql("""
             create or replace temporary view temp_housing_prices as
@@ -33,7 +36,7 @@ df = (
     .collect()
 )
 
-# Or use the spark shorthand
+# Or use the spark shorthand to create the view
 df = (
     spark.sql("""
             select 
