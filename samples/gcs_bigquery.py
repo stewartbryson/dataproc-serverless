@@ -15,6 +15,7 @@ file_path = "gs://dataproc-sample-data/house-price.parquet"
 #file_path = "house-price.parquet"
 
 # Create a dataframe for the parquet file
+# Infer the schema, so no Structs necessary
 df = (
     spark.read.option("inferSchema", "true")
     .option("header", "true")
@@ -49,7 +50,7 @@ df = (
     .createOrReplaceTempView("temp_housing_model2")
 )
 
-# Save to BigQuery
+# Save to BigQuery using the Spark way
 df = (
     spark.sql("""
             select 
