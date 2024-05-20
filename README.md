@@ -1,5 +1,11 @@
 # Samples for Dataproc Serverless
-An example Dataproc Batch execution command:
+First, push the code to a bucket:
+
+```
+gsutil samples/gcs_bigquery.py gs://<bucket-name>
+```
+
+Then execute the Dataproc Batch using gcloud:
 ```
 gcloud dataproc batches submit pyspark \
 gs://<bucket-name>/gcs_bigquery.py \
